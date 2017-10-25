@@ -228,6 +228,10 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
         return $this;
     }
 
+    /**
+     * prepare query before the execution
+     * @return BoolQuery
+     */
     protected function prepareQuery()
     {
         // Add a basic where clause to the query
@@ -261,5 +265,9 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
             $range->addField($attribute, ['from' => $from, 'to' => $to]);
             $this->filter->addMustNot($range);
         }
+
+        $this->query->addFilter($this->filter);
+
+        return $this->query;
     }
 }
