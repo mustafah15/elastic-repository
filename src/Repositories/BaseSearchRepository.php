@@ -4,6 +4,7 @@ namespace AqarmapESRepository\Repositories;
 
 use AqarmapESRepository\Contracts\SearchRepositoryContract;
 use Elastica\Query\BoolQuery;
+use Elastica\Query\Range;
 use Elastica\Query\Term;
 
 abstract class BaseSearchRepository implements SearchRepositoryContract
@@ -147,15 +148,13 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
      * Add a "where in" clause to the query.
      *
      * @param string $attribute
-     * @param mixed $values
-     * @param string $boolean
-     * @param bool $not
-     *
+     * @param string $from
+     * @param string $to
      * @return $this
      */
-    public function whereIn($attribute, $values, $boolean = 'and', $not = false)
+    public function whereIn($attribute, $from = '', $to = '')
     {
-        $this->whereIn[] = [$attribute, $values, $boolean ?: 'and', (bool) $not];
+        $this->whereIn[] = [$attribute, $from, $to];
 
         return $this;
     }
@@ -164,14 +163,13 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
      * Add a "where not in" clause to the query.
      *
      * @param string $attribute
-     * @param mixed $values
-     * @param string $boolean
-     *
+     * @param string $from
+     * @param string $to
      * @return $this
      */
-    public function whereNotIn($attribute, $values, $boolean = 'and')
+    public function whereNotIn($attribute, $from = '', $to = '')
     {
-        $this->whereNotIn[] = [$attribute, $values, $boolean ?: 'and'];
+        $this->whereNotIn[] = [$attribute, $from, $to];
 
         return $this;
     }
@@ -237,7 +235,31 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
             list($attribute, $value, $boost) = array_pad($where, 3, null);
             $subFilter = new Term();
             $subFilter->setTerm($attribute, $value, $boost);
-            $this->filter->addFilter($subFilter);
+            $this->filter->addMust($subFilter);
+        }
+
+        // Add a basic where not clause to the query
+        foreach ($this->whereNot as $whereNot) {
+            list($attribute, $value, $boost) = array_pad($whereNot, 3, null);
+            $subFilter = new Term();
+            $subFilter->setTerm($attribute, $value, $boost);
+            $this->filter->addMustNot($subFilter);
+        }
+
+        // Add a basic where in clause to the query
+        foreach ($this->whereIn as $whereIn) {
+            list($attribute, $from, $to) = array_pad($whereIn, 3, null);
+            $range = new Range();
+            $range->addField($attribute, ['from' => $from, 'to' => $to]);
+            $this->filter->addMust($range);
+        }
+
+        // Add a basic where not in clause to the query
+        foreach ($this->whereNotIn as $whereNotIn) {
+            list($attribute, $from, $to) = array_pad($whereNotIn, 3, null);
+            $range = new Range();
+            $range->addField($attribute, ['from' => $from, 'to' => $to]);
+            $this->filter->addMustNot($range);
         }
     }
 }

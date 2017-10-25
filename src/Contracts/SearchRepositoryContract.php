@@ -39,24 +39,21 @@ interface SearchRepositoryContract
      * Add a "where in" clause to the query.
      *
      * @param string $attribute
-     * @param mixed  $values
-     * @param string $boolean
-     * @param bool   $not
-     *
+     * @param string $from
+     * @param string $to
      * @return $this
      */
-    public function whereIn($attribute, $values, $boolean = 'and', $not = false);
+    public function whereIn($attribute, $from = '', $to = '');
 
     /**
      * Add a "where not in" clause to the query.
      *
      * @param string $attribute
-     * @param mixed  $values
-     * @param string $boolean
-     *
+     * @param string $from
+     * @param string $to
      * @return $this
      */
-    public function whereNotIn($attribute, $values, $boolean = 'and');
+    public function whereNotIn($attribute, $from = '', $to = '');
     /**
      * get query results
      *
