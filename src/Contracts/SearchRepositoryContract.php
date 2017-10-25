@@ -54,13 +54,6 @@ interface SearchRepositoryContract
      * @return $this
      */
     public function whereNotIn($attribute, $from = '', $to = '');
-    /**
-     * get query results
-     *
-     * @param array $attributes
-     * @return array
-     */
-    public function get($attributes = []);
 
     /**
      * Dynamically pass missing static methods to the model.
@@ -70,14 +63,4 @@ interface SearchRepositoryContract
      * @return mixed
      */
     public static function __callStatic($method, $parameters);
-
-    /**
-     * Dynamically pass missing methods to the model.
-     *
-     * @param string $method
-     * @param array  $parameters
-     *
-     * @return mixed
-     */
-    public function __call($method, $parameters);
 }

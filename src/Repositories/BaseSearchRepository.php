@@ -14,12 +14,6 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
     */
     protected $index;
     /**
-     * The relations to eager load on query execution.
-     *
-     * @var array
-     */
-    protected $relations = [];
-    /**
      * The query where clauses.
      *
      * @var array
@@ -174,18 +168,6 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
         return $this;
     }
 
-
-    /**
-     * get query results
-     *
-     * @param array $attributes
-     * @return array
-     */
-    public function get($attributes = [])
-    {
-        // TODO: Implement get() method.
-    }
-
     /**
      * Dynamically pass missing static methods to the model.
      *
@@ -196,19 +178,6 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
     public static function __callStatic($method, $parameters)
     {
         return call_user_func_array([new static(), $method], $parameters);
-    }
-
-    /**
-     * Dynamically pass missing methods to the model.
-     *
-     * @param string $method
-     * @param array $parameters
-     *
-     * @return mixed
-     */
-    public function __call($method, $parameters)
-    {
-        //todo implement call method
     }
 
     /**
@@ -234,40 +203,74 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
      */
     protected function prepareQuery()
     {
-        // Add a basic where clause to the query
         foreach ($this->where as $where) {
-            list($attribute, $value, $boost) = array_pad($where, 3, null);
-            $subFilter = new Term();
-            $subFilter->setTerm($attribute, $value, $boost);
-            $this->filter->addMust($subFilter);
+            $this->prepareWhereCondition($where);
         }
 
-        // Add a basic where not clause to the query
         foreach ($this->whereNot as $whereNot) {
-            list($attribute, $value, $boost) = array_pad($whereNot, 3, null);
-            $subFilter = new Term();
-            $subFilter->setTerm($attribute, $value, $boost);
-            $this->filter->addMustNot($subFilter);
+            $this->prepareWhereNotCondition($whereNot);
         }
 
         // Add a basic where in clause to the query
         foreach ($this->whereIn as $whereIn) {
-            list($attribute, $from, $to) = array_pad($whereIn, 3, null);
-            $range = new Range();
-            $range->addField($attribute, ['from' => $from, 'to' => $to]);
-            $this->filter->addMust($range);
+            $this->prepareWhereInCondition($whereIn);
         }
 
         // Add a basic where not in clause to the query
         foreach ($this->whereNotIn as $whereNotIn) {
-            list($attribute, $from, $to) = array_pad($whereNotIn, 3, null);
-            $range = new Range();
-            $range->addField($attribute, ['from' => $from, 'to' => $to]);
-            $this->filter->addMustNot($range);
+            $this->prepareWhereNotInCondition($whereNotIn);
         }
 
         $this->query->addFilter($this->filter);
 
         return $this->query;
+    }
+
+    /**
+     * add where condition to main filter
+     * @param array $where
+     */
+    private function prepareWhereCondition($where)
+    {
+        list($attribute, $value, $boost) = array_pad($where, 3, null);
+        $subFilter = new Term();
+        $subFilter->setTerm($attribute, $value, $boost);
+        $this->filter->addMust($subFilter);
+    }
+
+    /**
+     * add where not condition to main filter
+     * @param $whereNot
+     */
+    private function prepareWhereNotCondition($whereNot)
+    {
+        list($attribute, $value, $boost) = array_pad($whereNot, 3, null);
+        $subFilter = new Term();
+        $subFilter->setTerm($attribute, $value, $boost);
+        $this->filter->addMustNot($subFilter);
+    }
+
+    /**
+     * add where in to main filter
+     * @param $whereIn
+     */
+    private function prepareWhereInCondition($whereIn)
+    {
+        list($attribute, $from, $to) = array_pad($whereIn, 3, null);
+        $range = new Range();
+        $range->addField($attribute, ['from' => $from, 'to' => $to]);
+        $this->filter->addMust($range);
+    }
+
+    /**
+     * add where not in condition to the main filter
+     * @param $whereNotIn
+     */
+    private function prepareWhereNotInCondition($whereNotIn)
+    {
+        list($attribute, $from, $to) = array_pad($whereNotIn, 3, null);
+        $range = new Range();
+        $range->addField($attribute, ['from' => $from, 'to' => $to]);
+        $this->filter->addMustNot($range);
     }
 }
