@@ -24,6 +24,7 @@ class ESRepository extends BaseSearchRepository
         $this->order = [];
     }
     /**
+     * set sort field
      * @param string $sortBy
      * @return ESRepository
      */
@@ -34,6 +35,7 @@ class ESRepository extends BaseSearchRepository
     }
 
     /**
+     * set order direction
      * @param string $order
      * @return ESRepository
      */
@@ -60,6 +62,11 @@ class ESRepository extends BaseSearchRepository
         return $this->sortBy;
     }
 
+    /**
+     * add custom score function and get the result query
+     * @param Query\FunctionScore $functionScore
+     * @return mixed
+     */
     public function getResultWithScore(Query\FunctionScore $functionScore)
     {
         return $this->executeCallback(
@@ -73,6 +80,7 @@ class ESRepository extends BaseSearchRepository
     }
 
     /**
+     * return all results query
      * @return mixed
      */
     public function getResult()
@@ -83,10 +91,11 @@ class ESRepository extends BaseSearchRepository
     }
 
     /**
+     * adding score function to final query
      * @param Query\FunctionScore $functionScore
      * @return Query
      */
-    public function scoreResults(Query\FunctionScore $functionScore)
+    protected function scoreResults(Query\FunctionScore $functionScore)
     {
         $functionScore->setQuery($this->prepareQuery());
         $this->finalQuery->setQuery($functionScore);
