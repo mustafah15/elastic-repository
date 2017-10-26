@@ -24,22 +24,23 @@ class ESRepository extends BaseSearchRepository
         $this->order = [];
     }
     /**
-     * @param array $sortBy
+     * @param string $sortBy
      * @return ESRepository
      */
-    public function setSort(array $sortBy)
+    public function setSort($sortBy)
     {
-        $this->sortBy = $sortBy;
+        $this->sortBy = [$sortBy];
         return $this;
     }
 
     /**
-     * @param array $order
+     * @param string $order
      * @return ESRepository
      */
-    public function setOrder(array $order)
+    public function setOrder($order)
     {
-        $this->order = $order;
+        $this->order = ['order'=> $order];
+        $this->sortBy = [key($this->sortBy) => $this->order];
         return $this;
     }
 
