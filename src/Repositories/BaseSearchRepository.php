@@ -6,6 +6,7 @@ use AqarmapESRepository\Contracts\SearchRepositoryContract;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Range;
 use Elastica\Query\Term;
+use Elastica\Query\FunctionScore;
 
 abstract class BaseSearchRepository implements SearchRepositoryContract
 {
@@ -294,4 +295,11 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
 
         return $result;
     }
+
+    /**
+     * Do scoring logic here
+     * @param $scoreSettings
+     * @return FunctionScore;
+     */
+    abstract public function score($scoreSettings);
 }
