@@ -273,4 +273,25 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
         $range->addField($attribute, ['from' => $from, 'to' => $to]);
         $this->filter->addMustNot($range);
     }
+
+    /**
+     * Execute given callback and return the result.
+     *
+     * @param string   $class
+     * @param string   $method
+     * @param array    $args
+     * @param \Closure $closure
+     *
+     * @return mixed
+     */
+    protected function executeCallback($class, $method, $args, \Closure $closure)
+    {
+        //todo add caching here
+        $result = call_user_func($closure);
+
+        // We're done, let's clean up!
+        $this->resetRepository();
+
+        return $result;
+    }
 }
