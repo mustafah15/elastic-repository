@@ -2,7 +2,6 @@
 
 namespace Tests\Repositories;
 
-use phpDocumentor\Reflection\Types\String_;
 use PHPUnit\Framework\TestCase;
 use AqarmapESRepository\Repositories\ESRepository;
 
