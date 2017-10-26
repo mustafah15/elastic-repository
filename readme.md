@@ -72,3 +72,4 @@ public function score()
 ### todo
 - queries caching support
 
+- cover more code with tests
