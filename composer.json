@@ -3,7 +3,7 @@
     "description": "elastic search active repository package",
     "type": "package",
     "require": {
-        "ruflin/elastica": "^5.3"
+        "ruflin/elastica": "^5.2"
     },
     "autoload": {
         "psr-4": { "AqarmapESRepository\\": "src/" }
