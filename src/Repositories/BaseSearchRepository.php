@@ -296,10 +296,4 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
         return $result;
     }
 
-    /**
-     * Do scoring logic here
-     * @param $scoreSettings
-     * @return FunctionScore;
-     */
-    abstract public function score($scoreSettings);
 }
