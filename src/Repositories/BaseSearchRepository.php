@@ -55,7 +55,8 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
 
     public function __construct()
     {
-        $this->query = $this->filter = new BoolQuery();
+        $this->query  = new BoolQuery();
+        $this->filter = new BoolQuery();
     }
     /**
      * set elastic index
@@ -75,7 +76,7 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
     {
         return $this->index;
     }
-    
+
     /**
      * @param BoolQuery $query
      * @return $this
@@ -191,7 +192,6 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
         $this->whereNot = [];
         $this->whereIn = [];
         $this->whereNotIn = [];
-        $this->relations = [];
         $this->query = new BoolQuery();
         $this->filter = new  BoolQuery();
 
@@ -295,5 +295,4 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
 
         return $result;
     }
-
 }
