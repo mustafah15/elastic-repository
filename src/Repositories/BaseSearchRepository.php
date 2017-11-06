@@ -11,10 +11,6 @@ use Elastica\Query\FunctionScore;
 abstract class BaseSearchRepository implements SearchRepositoryContract
 {
     /**
-     * ElasticSearch index that we query
-    */
-    protected $index;
-    /**
      * The query where clauses.
      *
      * @var array
@@ -57,24 +53,6 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
     {
         $this->query  = new BoolQuery();
         $this->filter = new BoolQuery();
-    }
-    /**
-     * set elastic index
-     * @param string $index
-     * @return $this
-     */
-    public function setIndex(string $index)
-    {
-        $this->index = $index;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIndex()
-    {
-        return $this->index;
     }
 
     /**

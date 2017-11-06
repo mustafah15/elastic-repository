@@ -3,7 +3,7 @@
 namespace AqarmapESRepository\Repositories;
 
 use Elastica\Query;
-use Elastica\Query\FunctionScore;
+
 class ESRepository extends BaseSearchRepository
 {
 
