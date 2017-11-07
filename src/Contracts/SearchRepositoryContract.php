@@ -4,17 +4,6 @@ namespace AqarmapESRepository\Contracts;
 
 interface SearchRepositoryContract
 {
-    /**
-     * set elastic index
-     * @param string $index
-     * @return $this
-     */
-    public function setIndex(string $index);
-
-    /**
-     * @return string
-     */
-    public function getIndex();
 
     /**
      * Add a "Where" clause to the query.

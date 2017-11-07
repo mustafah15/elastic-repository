@@ -15,12 +15,7 @@ class BaseSearchRepositoryTest extends TestCase
         $this->repositoryObj = new ESRepository();
     }
 
-    public function test_it_has_index()
-    {
-        $index = 'listings';
-        $this->repositoryObj->setIndex($index);
-        $this->assertEquals($index, $this->repositoryObj->getIndex());
-    }
+
 
     public function test_where_it_return_obj()
     {
