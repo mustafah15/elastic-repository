@@ -4,9 +4,10 @@ namespace AqarmapESRepository\Repositories;
 
 use AqarmapESRepository\Contracts\SearchRepositoryContract;
 use Elastica\Query\BoolQuery;
+use Elastica\Query\Exists;
 use Elastica\Query\Range;
 use Elastica\Query\Term;
-use Elastica\Query\FunctionScore;
+use Elastica\Query\Terms;
 
 abstract class BaseSearchRepository implements SearchRepositoryContract
 {
@@ -17,6 +18,15 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
      */
     protected $where = [];
 
+    /**
+     * @var array $exist
+     */
+    protected $exist = [];
+
+    /**
+     * @var array $whereTerms
+     */
+    protected $whereTerms = [];
     /**
      * The query whereNot clauses.
      *
@@ -170,6 +180,8 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
         $this->whereNot = [];
         $this->whereIn = [];
         $this->whereNotIn = [];
+        $this->exist = [];
+        $this->whereTerms = [];
         $this->query = new BoolQuery();
         $this->filter = new  BoolQuery();
 
@@ -203,6 +215,31 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
         $this->query->addFilter($this->filter);
 
         return $this->query;
+    }
+
+    /**
+     * Add exist conditions to the main query
+     * @param $attribute
+     */
+    public function prepareExistCondition($attribute)
+    {
+        $this->filter->addMust(new Exists($attribute));
+    }
+
+    /**
+     * Add some bool terms to the main query
+     * @param array $term
+     */
+    public function prepareWhereTermsCondition($term)
+    {
+        $boolOr = new BoolQuery();
+        $terms = new Terms();
+        list($attribute, $value) = array_pad($term, 2, null);
+
+        $terms->setTerms($attribute, $value);
+        $boolOr->addShould($terms);
+
+        $this->filter->addMust($terms);
     }
 
     /**
