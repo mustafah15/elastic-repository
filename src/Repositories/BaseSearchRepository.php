@@ -159,6 +159,30 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
     }
 
     /**
+     * add new terms to the main filter
+     * @param $attribute
+     * @param $value
+     * @return $this
+     */
+    public function whereTerm($attribute, $value)
+    {
+        $this->whereTerms[] = [$attribute, $value];
+        
+        return $this;
+    }
+
+    /**
+     * add exist constrains to the main filter
+     * @param $attribute
+     * @return $this
+     */
+    public function exist($attribute)
+    {
+        $this->exist[] = [$attribute];
+
+        return $this;
+    }
+    /**
      * Dynamically pass missing static methods to the model.
      *
      * @param $method
@@ -194,10 +218,12 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
      */
     protected function prepareQuery()
     {
+        //prepare where conditions
         foreach ($this->where as $where) {
             $this->prepareWhereCondition($where);
         }
 
+        //prepare where not conditions
         foreach ($this->whereNot as $whereNot) {
             $this->prepareWhereNotCondition($whereNot);
         }
@@ -211,7 +237,17 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
         foreach ($this->whereNotIn as $whereNotIn) {
             $this->prepareWhereNotInCondition($whereNotIn);
         }
-
+        
+        // add Terms to main query
+        foreach ($this->whereTerms as $term) {
+            $this->prepareWhereTermsCondition($term);
+        }
+        
+        // add exists constrains to the query
+        foreach ($this->exist as $exist) {
+            $this->prepareExistCondition($exist);
+        }
+        
         $this->query->addFilter($this->filter);
 
         return $this->query;
