@@ -275,7 +275,7 @@ abstract class BaseSearchRepository implements SearchRepositoryContract
         $terms->setTerms($attribute, $value);
         $boolOr->addShould($terms);
 
-        $this->filter->addMust($terms);
+        $this->filter->addMust($boolOr);
     }
 
     /**
