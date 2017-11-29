@@ -2,7 +2,7 @@
 
 namespace AqarmapESRepository\Contracts;
 
-interface SearchRepositoryContract
+interface SearchContract
 {
 
     /**
@@ -25,31 +25,10 @@ interface SearchRepositoryContract
     public function whereNot($attribute, $value = null, $boost = 1.0);
 
     /**
-     * Add a "where in" clause to the query.
-     *
-     * @param string $attribute
-     * @param string $from
-     * @param string $to
+     * add new terms to the main filter
+     * @param $attribute
+     * @param $value
      * @return $this
      */
-    public function whereIn($attribute, $from = '', $to = '');
-
-    /**
-     * Add a "where not in" clause to the query.
-     *
-     * @param string $attribute
-     * @param string $from
-     * @param string $to
-     * @return $this
-     */
-    public function whereNotIn($attribute, $from = '', $to = '');
-
-    /**
-     * Dynamically pass missing static methods to the model.
-     *
-     * @param $method
-     * @param $parameters
-     * @return mixed
-     */
-    public static function __callStatic($method, $parameters);
+    public function whereTerm($attribute, $value);
 }

@@ -2,15 +2,15 @@
 
 namespace AqarmapESRepository\Repositories;
 
-use AqarmapESRepository\Contracts\SearchRepositoryContract;
+use AqarmapESRepository\Contracts\SearchContract;
+use AqarmapESRepository\Contracts\SearchInRangeContract;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Exists;
-use Elastica\Query\Match;
 use Elastica\Query\Range;
 use Elastica\Query\Term;
 use Elastica\Query\Terms;
 
-abstract class BaseSearchRepository implements SearchRepositoryContract
+abstract class BaseSearchRepository implements SearchContract, SearchInRangeContract
 {
     /**
      * The query where clauses.
