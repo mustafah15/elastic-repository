@@ -5,6 +5,7 @@ namespace AqarmapESRepository\Repositories;
 use AqarmapESRepository\Contracts\SearchRepositoryContract;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Exists;
+use Elastica\Query\Match;
 use Elastica\Query\Range;
 use Elastica\Query\Term;
 use Elastica\Query\Terms;

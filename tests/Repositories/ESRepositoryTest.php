@@ -4,15 +4,15 @@ namespace Tests\Repositories;
 
 use Elastica\Query;
 use PHPUnit\Framework\TestCase;
-use AqarmapESRepository\Repositories\ESRepository;
+use AqarmapESRepository\Repositories\ElasticRepository;
 
 class ESRepositoryTest extends TestCase
 {
-    /**@var ESRepository */
+    /**@var ElasticRepository */
     protected $repository;
     public function setUp()
     {
-        $this->repository = new ESRepository();
+        $this->repository = new ElasticRepository();
     }
 
     public function test_order_sortBy()

@@ -4,7 +4,7 @@ namespace AqarmapESRepository\Repositories;
 
 use Elastica\Query;
 
-class ESRepository extends BaseSearchRepository
+class ElasticRepository extends BaseSearchRepository
 {
 
     /**@var array $sortBy*/
@@ -26,7 +26,7 @@ class ESRepository extends BaseSearchRepository
     /**
      * set sort field
      * @param string $sortBy
-     * @return ESRepository
+     * @return ElasticRepository
      */
     public function setSort($sortBy)
     {
@@ -37,7 +37,7 @@ class ESRepository extends BaseSearchRepository
     /**
      * set order direction
      * @param string $order
-     * @return ESRepository
+     * @return ElasticRepository
      */
     public function setOrder($order)
     {
