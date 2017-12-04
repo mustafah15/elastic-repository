@@ -2,10 +2,17 @@
 
 namespace AqarmapESRepository\Repositories;
 
+use AqarmapESRepository\Builders\QueryBuilder;
+use AqarmapESRepository\Finders\Finder;
 use Elastica\Query;
 
-class ElasticRepository extends BaseSearchRepository
+class ElasticRepository
 {
+    /** @var Finder */
+    protected $finder;
+
+    /** @var QueryBuilder */
+    protected $queryBuilder;
 
     /**@var array $sortBy*/
     protected $sortBy;
@@ -18,7 +25,8 @@ class ElasticRepository extends BaseSearchRepository
 
     public function __construct()
     {
-        parent::__construct();
+        $this->finder = new Finder();
+        $this->queryBuilder = new QueryBuilder();
         $this->finalQuery = new Query();
         $this->sortBy = ['_score'];
         $this->order = [];
@@ -55,6 +63,7 @@ class ElasticRepository extends BaseSearchRepository
     }
 
     /**
+     * get sorting by value
      * @return mixed
      */
     public function getSortBy()
@@ -86,7 +95,7 @@ class ElasticRepository extends BaseSearchRepository
     public function getResult()
     {
         return $this->executeCallback(get_called_class(), __FUNCTION__, func_get_args(), function () {
-            return $this->finalQuery->setQuery($this->prepareQuery())->setSort($this->getSortBy());
+            return $this->finalQuery->setQuery($this->queryBuilder->prepareQuery())->setSort($this->getSortBy());
         });
     }
 
@@ -97,10 +106,31 @@ class ElasticRepository extends BaseSearchRepository
      */
     protected function scoreResults(Query\FunctionScore $functionScore)
     {
-        $functionScore->setQuery($this->prepareQuery());
+        $functionScore->setQuery($this->queryBuilder->prepareQuery());
         $this->finalQuery->setQuery($functionScore);
         $this->finalQuery->setSort($this->getSortBy());
 
         return $this->finalQuery;
+    }
+
+    /**
+     * Execute given callback and return the result.
+     *
+     * @param string   $class
+     * @param string   $method
+     * @param array    $args
+     * @param \Closure $closure
+     *
+     * @return mixed
+     */
+    protected function executeCallback($class, $method, $args, \Closure $closure)
+    {
+        //todo add caching here
+        $result = call_user_func($closure);
+
+        // We're done, let's clean up!
+        $this->queryBuilder->resetBuilder();
+
+        return $result;
     }
 }
