@@ -2,44 +2,21 @@
 
 namespace Tests\Repositories;
 
+use Elastica\Query;
 use PHPUnit\Framework\TestCase;
 use AqarmapESRepository\Repositories\ElasticRepository;
 
 class BaseSearchRepositoryTest extends TestCase
 {
-    /**@var ElasticRepository */
-    protected $repositoryObj;
+    protected $repository;
 
     public function setUp()
     {
-        $this->repositoryObj = new ElasticRepository();
+        $this->repository =  new ElasticRepository();
     }
 
-    public function test_where_it_return_obj()
+    public function test_it_return_query_obj()
     {
-        $repoObj = $this->repositoryObj->where('', '');
-
-        $this->assertInstanceOf(ElasticRepository::class, $repoObj);
-    }
-
-    public function test_wherenot_it_return_obj()
-    {
-        $repoObj = $this->repositoryObj->whereNot('', '');
-
-        $this->assertInstanceOf(ElasticRepository::class, $repoObj);
-    }
-
-    public function test_wherein_it_return_obj()
-    {
-        $repoObj = $this->repositoryObj->whereIn('', '', '');
-
-        $this->assertInstanceOf(ElasticRepository::class, $repoObj);
-    }
-
-    public function test_wherenotin_it_return_obj()
-    {
-        $repoObj = $this->repositoryObj->whereNotIn('', '', '');
-
-        $this->assertInstanceOf(ElasticRepository::class, $repoObj);
+        $this->assertInstanceOf(Query::class, $this->repository->getResult());
     }
 }
