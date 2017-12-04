@@ -153,7 +153,7 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
      * Reset repository to it's default
      * @return $this
      */
-    protected function resetBuilder()
+    public function resetBuilder()
     {
         $this->where = [];
         $this->whereNot = [];
@@ -171,7 +171,7 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
      * prepare query before the execution
      * @return BoolQuery
      */
-    protected function prepareQuery()
+    public function prepareQuery()
     {
         //prepare where conditions
         foreach ($this->where as $where) {
@@ -279,26 +279,5 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
         $range = new Range();
         $range->addField($attribute, ['from' => $from, 'to' => $to]);
         $this->filter->addMustNot($range);
-    }
-
-    /**
-     * Execute given callback and return the result.
-     *
-     * @param string   $class
-     * @param string   $method
-     * @param array    $args
-     * @param \Closure $closure
-     *
-     * @return mixed
-     */
-    protected function executeCallback($class, $method, $args, \Closure $closure)
-    {
-        //todo add caching here
-        $result = call_user_func($closure);
-
-        // We're done, let's clean up!
-        $this->resetBuilder();
-
-        return $result;
     }
 }
