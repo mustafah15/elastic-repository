@@ -8,5 +8,5 @@ use Elastica\Type;
 
 interface FinderContract
 {
-    public function find(Query $query, Index $index, Type $type);
+    public function find(Query $query, Type $type);
 }
