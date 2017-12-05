@@ -15,9 +15,13 @@ class ESRepositoryTest extends TestCase
         $this->repository = new ElasticRepository();
     }
 
-    public function test_order_sortBy()
+    public function test_orderBy()
     {
         $this->assertInternalType('array', $this->repository->getOrder());
+    }
+
+    public function test_sort_by()
+    {
         $this->assertInternalType('array', $this->repository->getSortBy());
     }
 
