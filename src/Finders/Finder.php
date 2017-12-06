@@ -10,15 +10,11 @@ use Elastica\Type;
 
 class Finder implements FinderContract
 {
-    /**@var  TransformerContract*/
-    protected $transformer;
-
     /**@var Client */
     protected $client;
 
     public function __construct(Client $client)
     {
-        $this->transformer = new HitsTransformer();
         $this->client = $client;
     }
 
