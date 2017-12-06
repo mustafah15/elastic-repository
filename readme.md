@@ -1,4 +1,5 @@
-# Aqarmap elastic search repository
+[outdated documentaion]
+# Aqarmap elastic search repository 
 
 ## :collision: Goals 
 - provide active repository pattern over your elasticsearch indices
