@@ -2,73 +2,66 @@
 
 namespace AqarmapESRepository\Repositories;
 
-use AqarmapESRepository\Builders\QueryBuilder;
+use AqarmapESRepository\Contracts\RepositoryContract;
 use AqarmapESRepository\Finders\Finder;
+use Elastica\Client;
 use Elastica\Query;
+use AqarmapESRepository\Transformers\HitsTransformer;
+use AqarmapESRepository\Contracts\TransformerContract;
+use Elastica\Type;
 
-class ElasticRepository
+class ElasticRepository extends BaseRepository implements RepositoryContract
 {
     /** @var Finder */
-    protected $finder;
+    public $finder;
 
-    /** @var QueryBuilder */
-    protected $queryBuilder;
-
-    /**@var array $sortBy*/
-    protected $sortBy;
-
-    /**@var array $order*/
-    protected $order;
+    /**@var  TransformerContract */
+    protected $transformer;
 
     /**@var Query $finalQuery*/
     protected $finalQuery;
 
-    public function __construct()
+    /**@var Client $client*/
+    private $client;
+
+    /**@var Type $type */
+    private $type;
+
+    public function __construct(Client $client)
     {
-        $this->finder = new Finder();
-        $this->queryBuilder = new QueryBuilder();
+        parent::__construct();
+        $this->client = $client;
         $this->finalQuery = new Query();
-        $this->sortBy = ['_score'];
-        $this->order = [];
+        $this->transformer = new HitsTransformer();
+        $this->finder = new Finder($this->client);
     }
+
     /**
-     * set sort field
-     * @param string $sortBy
-     * @return ElasticRepository
+     * @return Type
      */
-    public function setSort($sortBy)
+    public function getType()
     {
-        $this->sortBy = [$sortBy];
+        return $this->type;
+    }
+
+    /**
+     * @param Type $type
+     * @return $this
+     */
+    public function setType(Type $type)
+    {
+        $this->type = $type;
         return $this;
     }
 
     /**
-     * set order direction
-     * @param string $order
+     * @param TransformerContract $transformer
      * @return ElasticRepository
      */
-    public function setOrder($order)
+    public function setTransformer(TransformerContract $transformer)
     {
-        $this->order = ['order'=> $order];
-        $this->sortBy = [key($this->sortBy) => $this->order];
+        $this->transformer = $transformer;
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
-     * get sorting by value
-     * @return mixed
-     */
-    public function getSortBy()
-    {
-        return $this->sortBy;
     }
 
     /**
@@ -76,14 +69,14 @@ class ElasticRepository
      * @param Query\FunctionScore $functionScore
      * @return mixed
      */
-    public function getResultWithScore(Query\FunctionScore $functionScore)
+    public function getResultQueryWithScore(Query\FunctionScore $functionScore)
     {
         return $this->executeCallback(
             get_called_class(),
             __FUNCTION__,
             func_get_args(),
             function () use ($functionScore) {
-                return $this->scoreResults($functionScore);
+                return $this->scoreResultQuery($functionScore);
             }
         );
     }
@@ -92,7 +85,7 @@ class ElasticRepository
      * return all results query
      * @return mixed
      */
-    public function getResult()
+    public function getResultQuery()
     {
         return $this->executeCallback(get_called_class(), __FUNCTION__, func_get_args(), function () {
             return $this->finalQuery->setQuery($this->queryBuilder->prepareQuery())->setSort($this->getSortBy());
@@ -104,7 +97,7 @@ class ElasticRepository
      * @param Query\FunctionScore $functionScore
      * @return Query
      */
-    protected function scoreResults(Query\FunctionScore $functionScore)
+    protected function scoreResultQuery(Query\FunctionScore $functionScore)
     {
         $functionScore->setQuery($this->queryBuilder->prepareQuery());
         $this->finalQuery->setQuery($functionScore);
@@ -114,23 +107,12 @@ class ElasticRepository
     }
 
     /**
-     * Execute given callback and return the result.
-     *
-     * @param string   $class
-     * @param string   $method
-     * @param array    $args
-     * @param \Closure $closure
-     *
-     * @return mixed
+     * Result After Querying Client
+     * @return array
      */
-    protected function executeCallback($class, $method, $args, \Closure $closure)
+    public function get()
     {
-        //todo add caching here
-        $result = call_user_func($closure);
-
-        // We're done, let's clean up!
-        $this->queryBuilder->resetBuilder();
-
-        return $result;
+        $untransformedResults = $this->finder->find($this->finalQuery, $this->type);
+        return $this->transformer->transform($untransformedResults);
     }
 }

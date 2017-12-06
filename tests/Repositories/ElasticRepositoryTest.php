@@ -2,17 +2,19 @@
 
 namespace Tests\Repositories;
 
+use Elastica\Client;
 use Elastica\Query;
 use PHPUnit\Framework\TestCase;
 use AqarmapESRepository\Repositories\ElasticRepository;
 
-class ESRepositoryTest extends TestCase
+class ElasticRepositoryTest extends TestCase
 {
     /**@var ElasticRepository */
     protected $repository;
+
     public function setUp()
     {
-        $this->repository = new ElasticRepository();
+        $this->repository = new ElasticRepository(new Client());
     }
 
     public function test_orderBy()
@@ -27,11 +29,16 @@ class ESRepositoryTest extends TestCase
 
     public function test_get_results_with_score()
     {
-        $this->assertInstanceOf(Query::class, $this->repository->getResultWithScore(new Query\FunctionScore()));
+        $this->assertInstanceOf(Query::class, $this->repository->getResultQueryWithScore(new Query\FunctionScore()));
     }
 
     public function test_get_results()
     {
-        $this->assertInstanceOf(Query::class, $this->repository->getResult());
+        $this->assertInstanceOf(Query::class, $this->repository->getResultQuery());
+    }
+
+    public function test_it_return_query_obj()
+    {
+        $this->assertInstanceOf(Query::class, $this->repository->getResultQuery());
     }
 }
