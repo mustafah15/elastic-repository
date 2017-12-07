@@ -2,7 +2,7 @@
 
 namespace Tests\Finders;
 
-use AqarmapESRepository\Finders\Finder;
+use ElasticRepository\Finders\Finder;
 use Elastica\Client;
 use Elastica\Type;
 use Elastica\Index;

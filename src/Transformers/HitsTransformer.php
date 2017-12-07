@@ -1,8 +1,8 @@
 <?php
 
-namespace AqarmapESRepository\Transformers;
+namespace ElasticRepository\Transformers;
 
-use AqarmapESRepository\Contracts\TransformerContract;
+use ElasticRepository\Contracts\TransformerContract;
 
 class HitsTransformer implements TransformerContract
 {

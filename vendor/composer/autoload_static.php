@@ -37,15 +37,12 @@ class ComposerStaticInitb03ed0bcb0d63fac1f4494715c724db0
         array (
             'Elasticsearch\\' => 14,
             'Elastica\\' => 9,
+            'ElasticRepository\\' => 18,
         ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
-        ),
-        'A' => 
-        array (
-            'AqarmapESRepository\\' => 20,
         ),
     );
 
@@ -84,6 +81,10 @@ class ComposerStaticInitb03ed0bcb0d63fac1f4494715c724db0
         array (
             0 => __DIR__ . '/..' . '/ruflin/elastica/lib/Elastica',
         ),
+        'ElasticRepository\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
@@ -91,10 +92,6 @@ class ComposerStaticInitb03ed0bcb0d63fac1f4494715c724db0
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
-        ),
-        'AqarmapESRepository\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
@@ -109,7 +106,6 @@ class ComposerStaticInitb03ed0bcb0d63fac1f4494715c724db0
     );
 
     public static $classMap = array (
-        'BaseSearchRepositoryTest' => __DIR__ . '/../..' . '/tests/Repositories/BaseSearchRepositoryTest.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
@@ -641,6 +637,10 @@ class ComposerStaticInitb03ed0bcb0d63fac1f4494715c724db0
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\ResourceOperations\\ResourceOperations' => __DIR__ . '/..' . '/sebastian/resource-operations/src/ResourceOperations.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'Tests\\Buliders\\QueryBuilderTest' => __DIR__ . '/../..' . '/tests/Builders/QueryBuilderTest.php',
+        'Tests\\Finders\\FinderTest' => __DIR__ . '/../..' . '/tests/Finders/FinderTest.php',
+        'Tests\\Repositories\\ElasticRepositoryTest' => __DIR__ . '/../..' . '/tests/Repositories/ElasticRepositoryTest.php',
+        'Tests\\Transformers\\HitsTransformerTest' => __DIR__ . '/../..' . '/tests/Transformers/HitsTransformerTest.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'TheSeer\\Tokenizer\\Exception' => __DIR__ . '/..' . '/theseer/tokenizer/src/Exception.php',
         'TheSeer\\Tokenizer\\NamespaceUri' => __DIR__ . '/..' . '/theseer/tokenizer/src/NamespaceUri.php',

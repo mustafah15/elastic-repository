@@ -6,7 +6,7 @@
         "ruflin/elastica": "^5.2"
     },
     "autoload": {
-        "psr-4": { "AqarmapESRepository\\": "src/" }
+        "psr-4": { "ElasticRepository\\": "src/" }
     },
     "autoload-dev": {
         "classmap": [ "tests/"]

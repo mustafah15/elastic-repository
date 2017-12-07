@@ -1,6 +1,6 @@
 <?php
 
-namespace AqarmapESRepository\Contracts;
+namespace ElasticRepository\Contracts;
 
 use Elastica\Index;
 use Elastica\Query;

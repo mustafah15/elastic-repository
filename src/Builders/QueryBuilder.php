@@ -1,9 +1,9 @@
 <?php
 
-namespace AqarmapESRepository\Builders;
+namespace ElasticRepository\Builders;
 
-use AqarmapESRepository\Contracts\SearchContract;
-use AqarmapESRepository\Contracts\SearchInRangeContract;
+use ElasticRepository\Contracts\SearchContract;
+use ElasticRepository\Contracts\SearchInRangeContract;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Exists;
 use Elastica\Query\Range;

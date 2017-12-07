@@ -2,7 +2,7 @@
 
 namespace Tests\Transformers;
 
-use AqarmapESRepository\Transformers\HitsTransformer;
+use ElasticRepository\Transformers\HitsTransformer;
 use phpDocumentor\Reflection\Types\Array_;
 use PHPUnit\Framework\TestCase;
 

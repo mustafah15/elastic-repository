@@ -1,6 +1,6 @@
 <?php
 
-namespace AqarmapESRepository\Contracts;
+namespace ElasticRepository\Contracts;
 
 interface RepositoryContract
 {

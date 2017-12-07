@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'BaseSearchRepositoryTest' => $baseDir . '/tests/Repositories/BaseSearchRepositoryTest.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
@@ -538,6 +537,10 @@ return array(
     'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => $vendorDir . '/sebastian/recursion-context/src/InvalidArgumentException.php',
     'SebastianBergmann\\ResourceOperations\\ResourceOperations' => $vendorDir . '/sebastian/resource-operations/src/ResourceOperations.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
+    'Tests\\Buliders\\QueryBuilderTest' => $baseDir . '/tests/Builders/QueryBuilderTest.php',
+    'Tests\\Finders\\FinderTest' => $baseDir . '/tests/Finders/FinderTest.php',
+    'Tests\\Repositories\\ElasticRepositoryTest' => $baseDir . '/tests/Repositories/ElasticRepositoryTest.php',
+    'Tests\\Transformers\\HitsTransformerTest' => $baseDir . '/tests/Transformers/HitsTransformerTest.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'TheSeer\\Tokenizer\\Exception' => $vendorDir . '/theseer/tokenizer/src/Exception.php',
     'TheSeer\\Tokenizer\\NamespaceUri' => $vendorDir . '/theseer/tokenizer/src/NamespaceUri.php',

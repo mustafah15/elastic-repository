@@ -1,6 +1,6 @@
 <?php
 
-namespace AqarmapESRepository\Exceptions;
+namespace ElasticRepository\Exceptions;
 
 class ElasticRepositoryException extends \Exception
 {

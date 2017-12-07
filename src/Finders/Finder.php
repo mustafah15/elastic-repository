@@ -1,9 +1,9 @@
 <?php
-namespace AqarmapESRepository\Finders;
+namespace ElasticRepository\Finders;
 
-use AqarmapESRepository\Contracts\FinderContract;
-use AqarmapESRepository\Contracts\TransformerContract;
-use AqarmapESRepository\Transformers\HitsTransformer;
+use ElasticRepository\Contracts\FinderContract;
+use ElasticRepository\Contracts\TransformerContract;
+use ElasticRepository\Transformers\HitsTransformer;
 use Elastica\Client;
 use Elastica\Query;
 use Elastica\Type;

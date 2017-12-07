@@ -1,13 +1,13 @@
 <?php
 
-namespace AqarmapESRepository\Repositories;
+namespace ElasticRepository\Repositories;
 
-use AqarmapESRepository\Contracts\RepositoryContract;
-use AqarmapESRepository\Finders\Finder;
+use ElasticRepository\Contracts\RepositoryContract;
+use ElasticRepository\Finders\Finder;
 use Elastica\Client;
 use Elastica\Query;
-use AqarmapESRepository\Transformers\HitsTransformer;
-use AqarmapESRepository\Contracts\TransformerContract;
+use ElasticRepository\Transformers\HitsTransformer;
+use ElasticRepository\Contracts\TransformerContract;
 use Elastica\Type;
 
 class ElasticRepository extends BaseRepository implements RepositoryContract

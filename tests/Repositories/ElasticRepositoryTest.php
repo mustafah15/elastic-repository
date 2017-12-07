@@ -5,7 +5,7 @@ namespace Tests\Repositories;
 use Elastica\Client;
 use Elastica\Query;
 use PHPUnit\Framework\TestCase;
-use AqarmapESRepository\Repositories\ElasticRepository;
+use ElasticRepository\Repositories\ElasticRepository;
 
 class ElasticRepositoryTest extends TestCase
 {

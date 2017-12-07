@@ -1,8 +1,8 @@
 <?php
 
-namespace AqarmapESRepository\Repositories;
+namespace ElasticRepository\Repositories;
 
-use AqarmapESRepository\Builders\QueryBuilder;
+use ElasticRepository\Builders\QueryBuilder;
 
 class BaseRepository
 {

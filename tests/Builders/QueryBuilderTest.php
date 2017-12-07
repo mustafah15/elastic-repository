@@ -3,7 +3,7 @@
 namespace Tests\Buliders;
 
 use PHPUnit\Framework\TestCase;
-use AqarmapESRepository\Builders\QueryBuilder;
+use ElasticRepository\Builders\QueryBuilder;
 
 class QueryBuilderTest extends TestCase
 {
