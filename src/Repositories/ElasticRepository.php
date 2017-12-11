@@ -2,6 +2,7 @@
 
 namespace ElasticRepository\Repositories;
 
+use Elastica\Index;
 use ElasticRepository\Contracts\RepositoryContract;
 use ElasticRepository\Finders\Finder;
 use Elastica\Client;
@@ -22,10 +23,13 @@ class ElasticRepository extends BaseRepository implements RepositoryContract
     protected $finalQuery;
 
     /**@var Client $client*/
-    private $client;
+    protected $client;
+
+    /**@var Index $index */
+    protected $index;
 
     /**@var Type $type */
-    private $type;
+    protected $type;
 
     public function __construct(Client $client)
     {
@@ -54,6 +58,24 @@ class ElasticRepository extends BaseRepository implements RepositoryContract
         return $this;
     }
 
+    /**
+     * @param Index $index
+     * @return ElasticRepository
+     */
+    public function setIndex(Index $index)
+    {
+        $this->index = $index;
+        return $this;
+    }
+
+    /**
+     * Repository index getter
+     * @return Index
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
     /**
      * @param TransformerContract $transformer
      * @return ElasticRepository
