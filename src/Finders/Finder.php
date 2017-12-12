@@ -3,6 +3,7 @@ namespace ElasticRepository\Finders;
 
 use ElasticRepository\Contracts\FinderContract;
 use ElasticRepository\Contracts\TransformerContract;
+use ElasticRepository\Exceptions\ElasticRepositoryException;
 use ElasticRepository\Transformers\HitsTransformer;
 use Elastica\Client;
 use Elastica\Query;
@@ -23,12 +24,16 @@ class Finder implements FinderContract
      * @param Query $query
      * @param Type $type
      * @return array
+     * @throws \Exception
      */
     public function find(Query $query, Type $type)
     {
         $path = $this->generateRequestPath($type);
-
-        return $this->client->request($path, "GET", $query->toArray())->getData();
+        try {
+            return $this->client->request($path, "GET", $query->toArray())->getData();
+        } catch (ElasticRepositoryException $elasticRepositoryException) {
+            echo $elasticRepositoryException->getMessage();
+        }
     }
 
     /**

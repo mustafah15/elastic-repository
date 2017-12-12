@@ -131,6 +131,7 @@ class ElasticRepository extends BaseRepository implements RepositoryContract
     /**
      * Result After Querying Client
      * @return array
+     * @throws \Exception
      */
     public function get()
     {
