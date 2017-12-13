@@ -130,12 +130,13 @@ class ElasticRepository extends BaseRepository implements RepositoryContract
 
     /**
      * Result After Querying Client
+     * @param int $size
      * @return array
      * @throws \Exception
      */
-    public function get()
+    public function get($size = 1000)
     {
-        $untransformedResults = $this->finder->find($this->finalQuery, $this->type);
+        $untransformedResults = $this->finder->find($this->finalQuery->setSize($size), $this->type);
         return $this->transformer->transform($untransformedResults);
     }
 }
