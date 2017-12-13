@@ -89,7 +89,7 @@ class ElasticRepository extends BaseRepository implements RepositoryContract
     /**
      * add custom score function and get the result query
      * @param Query\FunctionScore $functionScore
-     * @return mixed
+     * @return Query
      */
     public function getResultQueryWithScore(Query\FunctionScore $functionScore)
     {
@@ -136,7 +136,23 @@ class ElasticRepository extends BaseRepository implements RepositoryContract
      */
     public function get($size = 1000)
     {
-        $untransformedResults = $this->finder->find($this->finalQuery->setSize($size), $this->type);
+        $untransformedResults = $this->finder->find($this->getResultQuery(), $this->type);
+        return $this->transformer->transform($untransformedResults);
+    }
+
+    /**
+     * @param Query\FunctionScore $scoreFunction
+     * @param int $size
+     * @return array|mixed
+     * @throws \Exception
+     */
+    public function getResultWithScore(Query\FunctionScore $scoreFunction, $size = 100)
+    {
+        $untransformedResults = $this->finder->find(
+            $this->getResultQueryWithScore($scoreFunction)->setSize($size),
+            $this->type
+        );
+
         return $this->transformer->transform($untransformedResults);
     }
 }
