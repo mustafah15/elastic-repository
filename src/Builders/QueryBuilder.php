@@ -2,6 +2,7 @@
 
 namespace ElasticRepository\Builders;
 
+use Elastica\Query\Match;
 use ElasticRepository\Contracts\SearchContract;
 use ElasticRepository\Contracts\SearchInRangeContract;
 use Elastica\Query\BoolQuery;
@@ -50,13 +51,15 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
      */
     protected $whereNotIn = [];
 
+    /**@var array $match */
+    protected $match = [];
+
     /**
      * @var BoolQuery
      */
     protected $filter;
 
     /**
-     *
      * @var BoolQuery
      */
     protected $query;
@@ -149,6 +152,13 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
         return $this;
     }
 
+    public function match($attribute, $keyword)
+    {
+        $this->match[] = [$attribute, $keyword];
+
+        return $this;
+    }
+
     /**
      * Reset repository to it's default
      * @return $this
@@ -161,6 +171,7 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
         $this->whereNotIn = [];
         $this->exist = [];
         $this->whereTerms = [];
+        $this->match = [];
         $this->query = new BoolQuery();
         $this->filter = new  BoolQuery();
 
@@ -201,6 +212,11 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
         // add exists constrains to the query
         foreach ($this->exist as $exist) {
             $this->prepareExistCondition($exist);
+        }
+
+        // add matcher queries
+        foreach ($this->match as $match) {
+            $this->prepareMatchQueries($match);
         }
 
         $this->query->addFilter($this->filter);
@@ -279,5 +295,14 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
         $range = new Range();
         $range->addField($attribute, ['from' => $from, 'to' => $to]);
         $this->filter->addMustNot($range);
+    }
+
+    private function prepareMatchQueries($match)
+    {
+        list($attribute, $keyword) = array_pad($match, 2, null);
+
+        $matcher = new Match();
+        $matcher->setField($attribute, $keyword);
+        $this->filter->addFilter($matcher);
     }
 }
