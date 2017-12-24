@@ -76,7 +76,9 @@ class ElasticRepository extends BaseRepository implements RepositoryContract
     {
         return $this->index;
     }
+
     /**
+     * Adding transformer for results
      * @param TransformerContract $transformer
      * @return ElasticRepository
      */
@@ -84,6 +86,17 @@ class ElasticRepository extends BaseRepository implements RepositoryContract
     {
         $this->transformer = $transformer;
         return $this;
+    }
+
+    /**
+     * return results query
+     * @return Query
+     */
+    public function getResultQuery()
+    {
+        return $this->executeCallback(get_called_class(), __FUNCTION__, func_get_args(), function () {
+            return $this->finalQuery->setQuery($this->queryBuilder->prepareQuery())->setSort($this->getSortBy());
+        });
     }
 
     /**
@@ -101,17 +114,6 @@ class ElasticRepository extends BaseRepository implements RepositoryContract
                 return $this->scoreResultQuery($functionScore);
             }
         );
-    }
-
-    /**
-     * return all results query
-     * @return mixed
-     */
-    public function getResultQuery()
-    {
-        return $this->executeCallback(get_called_class(), __FUNCTION__, func_get_args(), function () {
-            return $this->finalQuery->setQuery($this->queryBuilder->prepareQuery())->setSort($this->getSortBy());
-        });
     }
 
     /**
@@ -146,7 +148,7 @@ class ElasticRepository extends BaseRepository implements RepositoryContract
      * @return array|mixed
      * @throws \Exception
      */
-    public function getResultWithScore(Query\FunctionScore $scoreFunction, $size = 100)
+    public function getResultWithScore(Query\FunctionScore $scoreFunction, $size = 1000)
     {
         $untransformedResults = $this->finder->find(
             $this->getResultQueryWithScore($scoreFunction)->setSize($size),
