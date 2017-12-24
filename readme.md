@@ -1,76 +1,86 @@
-[outdated documentaion]
-# Aqarmap elastic search repository 
+#  Elasticsearch Repository Package
 
 ## :collision: Goals 
 - provide active repository pattern over your elasticsearch indices
-- provide query builder for elasticsearch 
+- provide query builder for your elasticsearch repository
 
 
 ## :sparkles: Usage 
-- Extend ESRepository class as a repository for your type or index.
+- Extend ElasticRepository class as a repository for your type or index.
 ```php
-class schoolsRepository extends ESRepository 
+class schoolsRepository extends ElasticRepository 
 {
     // method contains some bussiness logic 
-    public function returnSomeResultWithScoreingFun()
+    public function returnQueryWherename()
     {
-        $this->where('name', 'EGSchool', 0.5)->getResult();
+        $this->where('name', 'EGSchool', 0.5)->getResultQuery();
     }
 }
 ```
 ##  :clipboard: Documentation 
+##`ElasticRepository`
+---
+#### `setIndex()`, `setType()`
+The `setIndex()` and `setType()` methods for setting up your index name and type name into Repository:
+
+### `setTransformer($transformer)`
+The `setTransformer($transformer)` to add transformer for your result transformer must implement `TransformerContract`
+
+#### `get()`
+method `get()` to get result from your final query after building it using query builder:
+
+#### `getResultWithScore()`
+The `getResultWithScore($scoreFunction)` method to get results after adding a score function:
+takes `Query\FunctionScore $functionScore` as a parameter to be applied to your results
+
+#### `getResultQuery()`
+the `getResultQuery()` return Query object
+
+### `getResultQueryWithScore($scoreFunction)`
+takes `Query\FunctionScore $functionScore` as a parameter to apply scoring to your query
+
+---
+## `QueryBuilder`
+Every ElasticRepository class have it's own query builder which have a lot of operations
 
 #### `where()`, `whereNot()`
 The `where()` and `whereNot()` methods adding must and must not to the main filter:
 ```php
 //attribute paramter then the expected value and optional value for the field boost
-$repository->where($attribute, $value = null, $boost = 1.0);
+$queryBuilder->where($attribute, $value = null, $boost = 1.0);
 ```
 
 #### `whereIn()`, `whereNotIn()`
 The `whereIn()` and `whereNotIn()` methods adding Range to the main filter:
 ```php
 //attribute paramter then a optional value for the fields from and to
-$repository->whereIn($attribute, $from = '', $to = '');
+$queryBuilder->whereIn($attribute, $from = '', $to = '');
 ```
 
 #### `setSort()`
 The `setSort()` method adds main sort criteria for the query:
+sorting with _score by default when adding score function
 ```php
 // pass field name to sort by 
-$repository->setSort('fieldName');
+$queryBuilder->setSort('fieldName');
 ```
 
 #### `setOrder()`
 The `setOrder()` method to specify sort direction:
 ```php
-$repository->setSort('fieldName')->setOrder('desc');
+$queryBuilder->setSort('fieldName')->setOrder('desc');
 ```
 
-#### `getResult()`
-method `getResult()` to get result query:
-
-#### `getResultWithScore()`
-The `getResultWithScore()` method to get results after adding a score function:
+#### `exist('fieldName')`
 ```php
-$scoreQuery = $this->score();
-$repository->getResultWithScore($scoreQuery);
+$queryBuilder->exist('fieldName');
 ```
 
-#### `score()`
-The abstract `score()` method is left with no implementation to add your own score logic in the repository,
-and it must return FunctionScore() object:
+#### `match($attribute, $keyword)`
 ```php
-/**
-* @return Query\FunctionScore
-*/
-public function score()
-{
-    // your implementation;
-}
+$queryBuilder->match('fieldName', $keywordToMatch);
 ```
 
 ### todo
 - queries caching support
-
 - cover more code with tests
