@@ -18,7 +18,9 @@ class schoolsRepository extends ElasticRepository
 }
 ```
 ##  :clipboard: Documentation 
-##`ElasticRepository`
+
+## `ElasticRepository`
+
 ---
 #### `setIndex()`, `setType()`
 The `setIndex()` and `setType()` methods for setting up your index name and type name into Repository:
