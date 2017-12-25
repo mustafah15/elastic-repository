@@ -1,5 +1,5 @@
 {
-    "name": "mustafah15/elastic-repository",
+    "name": "aqarmap/elastic-repository",
     "description": "elastic search active repository package",
     "type": "package",
     "require": {

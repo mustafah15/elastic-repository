@@ -1,4 +1,4 @@
-#  Elasticsearch Repository Package
+#  Aqarmap Elasticsearch Repository Package
 
 ## :collision: Goals 
 - provide active repository pattern over your elasticsearch indices
