@@ -152,6 +152,12 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
         return $this;
     }
 
+    /**
+     * match words to field
+     * @param $attribute
+     * @param $keyword
+     * @return $this
+     */
     public function match($attribute, $keyword)
     {
         $this->match[] = [$attribute, $keyword];
@@ -228,7 +234,7 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
      * Add exist conditions to the main query
      * @param $attribute
      */
-    public function prepareExistCondition($attribute)
+    private function prepareExistCondition($attribute)
     {
         $this->filter->addMust(new Exists($attribute));
     }
@@ -237,7 +243,7 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
      * Add some bool terms to the main query
      * @param array $term
      */
-    public function prepareWhereTermsCondition($term)
+    private function prepareWhereTermsCondition($term)
     {
         $boolOr = new BoolQuery();
         $terms = new Terms();
@@ -297,6 +303,10 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
         $this->filter->addMustNot($range);
     }
 
+    /**
+     * prepare match query
+     * @param $match
+     */
     private function prepareMatchQueries($match)
     {
         list($attribute, $keyword) = array_pad($match, 2, null);

@@ -2,6 +2,7 @@
 
 namespace Tests\Buliders;
 
+use Elastica\Query\BoolQuery;
 use ElasticRepository\Contracts\SearchContract;
 use ElasticRepository\Contracts\SearchInRangeContract;
 use PHPUnit\Framework\TestCase;
@@ -74,5 +75,18 @@ class QueryBuilderTest extends TestCase
         $match = $this->queryBuilderObj->match('item', 'keyword');
 
         $this->assertInstanceOf(QueryBuilder::class, $match);
+    }
+
+    public function test_restBuilder_should_return_obj()
+    {
+        $builderObject = $this->queryBuilderObj->resetBuilder();
+        $this->assertInstanceOf(QueryBuilder::class, $builderObject);
+    }
+
+    public function test_prepareQuery_should_return_BoolQueryObj()
+    {
+        $builderObject = $this->queryBuilderObj->prepareQuery();
+
+        $this->assertInstanceOf(BoolQuery::class, $builderObject);
     }
 }
