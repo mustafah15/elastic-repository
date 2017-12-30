@@ -1,8 +1,21 @@
-# Elasticsearch Repository Package
+# :tada: Elasticsearch Repository Package
+Elasticsearch Repository is a simple, smart implementation of Active Repository for Elasticsearch.
 
-## :collision: Goals  
-- provide active repository pattern over your elasticsearch indices, types
-- provide query builder for your elasticsearch repositories
+## :fire: Features
+- provide active repository pattern over your elasticsearch indices, types.
+- bring query builder into your elasticsearch repositories.
+- Minimize lines of code for building elasticsearch queries with system with big business logic.
+- Prevent code duplication.
+- Reduce potential programming errors.
+
+
+## "grey_exclamation: Installation
+ grap it via composer 
+
+```bash
+composer require mustafah15\elastic-repository
+
+``` 
 
 ---
 ## :sparkles: Usage 
@@ -51,7 +64,7 @@ takes `Query\FunctionScore $functionScore` as a parameter to be applied to your 
 #### `getResultQuery()`
 the `getResultQuery()` return Query object
 
-### `getResultQueryWithScore($scoreFunction)`
+#### `getResultQueryWithScore($scoreFunction)`
 takes `Query\FunctionScore $functionScore` as a parameter to apply scoring to your query
 
 ## `QueryBuilder`
