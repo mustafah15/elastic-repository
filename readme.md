@@ -1,8 +1,8 @@
-#  Aqarmap Elasticsearch Repository Package
+# Elasticsearch Repository Package
 
-## :collision: Goals 
-- provide active repository pattern over your elasticsearch indices
-- provide query builder for your elasticsearch repository
+## :collision: Goals  
+- provide active repository pattern over your elasticsearch indices, types
+- provide query builder for your elasticsearch repositories
 
 ---
 ## :sparkles: Usage 
