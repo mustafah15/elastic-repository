@@ -80,7 +80,7 @@ $queryBuilder->exist('fieldName');
 ```php
 $queryBuilder->match('fieldName', $keywordToMatch);
 ```
-
+---
 ### todo
 - caching support
 

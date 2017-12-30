@@ -1,5 +1,5 @@
 {
-    "name": "aqarmap/elastic-repository",
+    "name": "mustafah15/elastic-repository",
     "description": "elastic search active repository package",
     "type": "package",
     "require": {
@@ -19,7 +19,7 @@
         {
             "name": "Mustafa Hussain",
             "email": "mustafa.hussain93@gmail.com",
-            "role": "developer"
+            "role": "owner"
         }
     ]
 }
