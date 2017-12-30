@@ -9,7 +9,7 @@ Elasticsearch Repository is a simple, smart implementation of Active Repository 
 - Reduce potential programming errors.
 
 
-## "grey_exclamation: Installation
+## :grey_exclamation: Installation
  grap it via composer 
 
 ```bash
