@@ -4,7 +4,7 @@
 - provide active repository pattern over your elasticsearch indices
 - provide query builder for your elasticsearch repository
 
-
+---
 ## :sparkles: Usage 
 - Extend ElasticRepository class as a repository for your type or index.
 ```php
@@ -21,9 +21,22 @@ class schoolsRepository extends ElasticRepository
 
 ## `ElasticRepository`
 
----
 #### `setIndex()`, `setType()`
 The `setIndex()` and `setType()` methods for setting up your index name and type name into Repository:
+
+#### `setSort()`
+The `setSort()` method adds main sort criteria for the query:
+sorting with _score by default when adding score function
+```php
+// pass field name to sort by 
+$queryBuilder->setSort('fieldName');
+```
+
+#### `setOrder()`
+The `setOrder()` method to specify sort direction:
+```php
+$queryBuilder->setSort('fieldName')->setOrder('desc');
+```
 
 ### `setTransformer($transformer)`
 The `setTransformer($transformer)` to add transformer for your result transformer must implement `TransformerContract`
@@ -41,7 +54,6 @@ the `getResultQuery()` return Query object
 ### `getResultQueryWithScore($scoreFunction)`
 takes `Query\FunctionScore $functionScore` as a parameter to apply scoring to your query
 
----
 ## `QueryBuilder`
 Every ElasticRepository class have it's own query builder which have a lot of operations
 
@@ -59,20 +71,6 @@ The `whereIn()` and `whereNotIn()` methods adding Range to the main filter:
 $queryBuilder->whereIn($attribute, $from = '', $to = '');
 ```
 
-#### `setSort()`
-The `setSort()` method adds main sort criteria for the query:
-sorting with _score by default when adding score function
-```php
-// pass field name to sort by 
-$queryBuilder->setSort('fieldName');
-```
-
-#### `setOrder()`
-The `setOrder()` method to specify sort direction:
-```php
-$queryBuilder->setSort('fieldName')->setOrder('desc');
-```
-
 #### `exist('fieldName')`
 ```php
 $queryBuilder->exist('fieldName');
@@ -84,5 +82,10 @@ $queryBuilder->match('fieldName', $keywordToMatch);
 ```
 
 ### todo
-- queries caching support
-- cover more code with tests
+- caching support
+
+### Contributing
+Please see [CONTRIBUTING](https://github.com/mustafah15/elastic-repository/blob/master/CONTRIBUTING.md) for details.
+
+### License
+The MIT License (MIT). Please see [License](https://github.com/mustafah15/elastic-repository/blob/master/LICENCE) File for more information.
