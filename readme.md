@@ -51,7 +51,7 @@ The `setOrder()` method to specify sort direction:
 $queryBuilder->setSort('fieldName')->setOrder('desc');
 ```
 
-### `setTransformer($transformer)`
+#### `setTransformer($transformer)`
 The `setTransformer($transformer)` to add transformer for your result transformer must implement `TransformerContract`
 
 #### `get()`
