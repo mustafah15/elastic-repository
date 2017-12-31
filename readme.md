@@ -94,7 +94,7 @@ $queryBuilder->exist('fieldName');
 $queryBuilder->match('fieldName', $keywordToMatch);
 ```
 ---
-### todo
+### TODO
 - adding laravel service provider
 - caching support
 
