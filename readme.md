@@ -1,6 +1,9 @@
 
 [![Packagist](https://img.shields.io/packagist/v/mustafah15/elastic-repository.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/mustafah15/elastic-repository)
 
+[![License](https://img.shields.io/packagist/l/mustafah15/elastic-repository.svg?label=License&style=flat-square)](https://github.com/mustafah15/elastic-repository/blob/master/LICENSE)
+
+
 # :tada: Elasticsearch Repository Package
 
 Elasticsearch Repository is a simple, smart implementation of Active Repository for Elasticsearch.
@@ -23,7 +26,11 @@ composer require mustafah15/elastic-repository
 
 ```
 
----
+## integration 
+
+**Elasticsearch Repository** package is framework-agnostic and as such can be integrated easily natively or with your favorite framework.
+
+
 ## :sparkles: Usage
 
 - Extend ElasticRepository class as a repository for your type or index.
