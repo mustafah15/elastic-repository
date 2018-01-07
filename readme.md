@@ -1,6 +1,5 @@
 
 [![Packagist](https://img.shields.io/packagist/v/mustafah15/elastic-repository.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/mustafah15/elastic-repository)
-
 [![License](https://img.shields.io/packagist/l/mustafah15/elastic-repository.svg?label=License&style=flat-square)](https://github.com/mustafah15/elastic-repository/blob/master/LICENSE)
 
 
