@@ -1,3 +1,6 @@
+
+[![Packagist](https://img.shields.io/packagist/v/mustafah15/elastic-repository.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/mustafah15/elastic-repository)
+
 # :tada: Elasticsearch Repository Package
 
 Elasticsearch Repository is a simple, smart implementation of Active Repository for Elasticsearch.
