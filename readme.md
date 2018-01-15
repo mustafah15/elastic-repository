@@ -122,7 +122,6 @@ $queryBuilder->match('fieldName', $keywordToMatch);
 
 ---
 ### TODO
-- adding laravel service provider
 - caching support
 
 ### Contributing
