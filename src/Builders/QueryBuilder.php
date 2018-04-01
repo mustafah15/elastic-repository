@@ -38,18 +38,18 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
     protected $whereNot = [];
 
     /**
-     * The query whereIn clauses.
+     * The query in range clauses.
      *
      * @var array
      */
-    protected $whereIn = [];
+    protected $inRange = [];
 
     /**
-     * The query whereNotIn clauses.
+     * The query not in range clauses.
      *
      * @var array
      */
-    protected $whereNotIn = [];
+    protected $notInRange = [];
 
     /**@var array $match */
     protected $match = [];
@@ -98,31 +98,31 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
     }
 
     /**
-     * Add a "where in" clause to the query.
+     * Add a "in range" clause to the query.
      *
      * @param string $attribute
      * @param string $from
      * @param string $to
      * @return $this
      */
-    public function whereIn($attribute, $from = '', $to = '')
+    public function inRange($attribute, $from = '', $to = '')
     {
-        $this->whereIn[] = [$attribute, $from, $to];
+        $this->inRange[] = [$attribute, $from, $to];
 
         return $this;
     }
 
     /**
-     * Add a "where not in" clause to the query.
+     * Add a "not in range" clause to the query.
      *
      * @param string $attribute
      * @param string $from
      * @param string $to
      * @return $this
      */
-    public function whereNotIn($attribute, $from = '', $to = '')
+    public function notInRange($attribute, $from = '', $to = '')
     {
-        $this->whereNotIn[] = [$attribute, $from, $to];
+        $this->notInRange[] = [$attribute, $from, $to];
 
         return $this;
     }
@@ -136,7 +136,6 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
     public function whereTerm($attribute, $value)
     {
         $this->whereTerms[] = [$attribute, $value];
-
         return $this;
     }
 
@@ -173,8 +172,8 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
     {
         $this->where = [];
         $this->whereNot = [];
-        $this->whereIn = [];
-        $this->whereNotIn = [];
+        $this->inRange = [];
+        $this->notInRange = [];
         $this->exist = [];
         $this->whereTerms = [];
         $this->match = [];
@@ -200,14 +199,14 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
             $this->prepareWhereNotCondition($whereNot);
         }
 
-        // Add a basic where in clause to the query
-        foreach ($this->whereIn as $whereIn) {
-            $this->prepareWhereInCondition($whereIn);
+        // Add a basic range clause to the query
+        foreach ($this->inRange as $inRange) {
+            $this->prepareInRangeCondition($inRange);
         }
 
-        // Add a basic where not in clause to the query
-        foreach ($this->whereNotIn as $whereNotIn) {
-            $this->prepareWhereNotInCondition($whereNotIn);
+        // Add a basic not in range clause to the query
+        foreach ($this->notInRange as $notInRange) {
+            $this->prepareNotInRangeCondition($notInRange);
         }
 
         // add Terms to main query
@@ -280,27 +279,27 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
     }
 
     /**
-     * add where in to main filter
-     * @param $whereIn
+     * add range in to main filter
+     * @param $inRange
      */
-    private function prepareWhereInCondition($whereIn)
+    private function prepareInRangeCondition($inRange)
     {
-        list($attribute, $from, $to) = array_pad($whereIn, 3, null);
-        $range = new Range();
-        $range->addField($attribute, ['from' => $from, 'to' => $to]);
-        $this->filter->addMust($range);
+        list($attribute, $from, $to) = array_pad($inRange, 3, null);
+        $inRange = new Range();
+        $inRange->addField($attribute, ['from' => $from, 'to' => $to]);
+        $this->filter->addMust($inRange);
     }
 
     /**
-     * add where not in condition to the main filter
-     * @param $whereNotIn
+     * add Not In Range condition to the main filter
+     * @param $notInRange
      */
-    private function prepareWhereNotInCondition($whereNotIn)
+    private function prepareNotInRangeCondition($notInRange)
     {
-        list($attribute, $from, $to) = array_pad($whereNotIn, 3, null);
-        $range = new Range();
-        $range->addField($attribute, ['from' => $from, 'to' => $to]);
-        $this->filter->addMustNot($range);
+        list($attribute, $from, $to) = array_pad($notInRange, 3, null);
+        $inRange = new Range();
+        $inRange->addField($attribute, ['from' => $from, 'to' => $to]);
+        $this->filter->addMustNot($inRange);
     }
 
     /**

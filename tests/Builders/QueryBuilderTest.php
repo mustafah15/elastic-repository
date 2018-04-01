@@ -44,14 +44,14 @@ class QueryBuilderTest extends TestCase
 
     public function test_wherein_it_return_obj()
     {
-        $repoObj = $this->queryBuilderObj->whereIn('', '', '');
+        $repoObj = $this->queryBuilderObj->inRange('', '', '');
 
         $this->assertInstanceOf(QueryBuilder::class, $repoObj);
     }
 
     public function test_wherenotin_it_return_obj()
     {
-        $repoObj = $this->queryBuilderObj->whereNotIn('', '', '');
+        $repoObj = $this->queryBuilderObj->notInRange('', '', '');
 
         $this->assertInstanceOf(QueryBuilder::class, $repoObj);
     }
