@@ -12,7 +12,7 @@ interface SearchInRangeContract
      * @param string $to
      * @return $this
      */
-    public function whereIn($attribute, $from = '', $to = '');
+    public function inRange($attribute, $from = '', $to = '');
 
     /**
      * Add a "where not in" clause to the query.
@@ -22,5 +22,5 @@ interface SearchInRangeContract
      * @param string $to
      * @return $this
      */
-    public function whereNotIn($attribute, $from = '', $to = '');
+    public function notInRange($attribute, $from = '', $to = '');
 }
