@@ -146,7 +146,7 @@ class QueryBuilder implements SearchInRangeContract, SearchContract
      */
     public function exist($attribute)
     {
-        $this->exist[] = [$attribute];
+        $this->exist[] = $attribute;
 
         return $this;
     }
