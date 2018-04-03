@@ -122,6 +122,7 @@ $queryBuilder->match('fieldName', $keywordToMatch);
 
 ---
 ### TODO
+- add the rest of crud operation (insert, update)
 - caching support
 
 ### Contributing
